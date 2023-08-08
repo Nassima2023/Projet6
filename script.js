@@ -1,47 +1,46 @@
-// variables et constantes 
 
+// variables et constantes
 let works = null;
-let categories = [];
-let buttonCategories = document.createElement('button');
+let categories = null;
+const categoriesDiv = document.querySelector('.categories');
+const galleryDiv = document.querySelector('.gallery');
 
-
-// Fonctions 
-window.onload = async (event) =>
-{
-  // Appel de la fonction pour créer les éléments HTML de la galerie
-  works = await getDataFromBackend("works");
-  createElementGallery();
-
-  // Appel à l'API pour récupérer les catégories 
-  categories = await getDataFromBackend("categories")
-  console.log(categories);
-
-  // Appel à la fonction createCategoryButtons pour afficher les boutons sur la page 
-  createCategoryButtons()
-
-};
-  
-async function getDataFromBackend(dataToGet) 
-{
-  try 
-  {
+// Fonction pour récupérer les données du backend
+async function getDataFromBackend(dataToGet) {
+  try {
     const response = await fetch('http://localhost:5678/api/' + dataToGet);
     const data = await response.json();
     return data;
-  } catch (error) 
-  {
+  } catch (error) {
     console.error('Erreur lors de la récupération des données du backend:', error);
   }
 }
 
-  
-// Fonction pour créer les éléments HTML dynamiquement
-async function createElementGallery() 
-{
-  const galleryDiv = document.querySelector('.gallery');
+// Chargement initial de la page
+window.onload = async () => {
+  // Récupération des données du backend
+  works = await getDataFromBackend("works");
+  categories = await getDataFromBackend("categories");
 
-  for (const element of works) 
-  {
+  // Création des boutons de catégories
+  createCategoryButtons();
+
+  // Affichage initial de la galerie
+  createElementGallery();
+};
+
+
+// Fonction pour filtrer les images par catégorie
+function filterGalleryByCategory(categoryName) {
+
+  // Vide la galerie actuelle
+  galleryDiv.innerHTML = '';
+
+  // Filtrer les images par catégorie
+  const filteredWorks = works.filter(work => work.category.name === categoryName);
+
+  // Créer les éléments HTML pour chaque image filtrée
+  filteredWorks.forEach(element => {
     const figureElement = document.createElement('figure');
     const imgElement = document.createElement('img');
     const figcaptionElement = document.createElement('figcaption');
@@ -53,35 +52,46 @@ async function createElementGallery()
     figureElement.appendChild(imgElement);
     figureElement.appendChild(figcaptionElement);
     galleryDiv.appendChild(figureElement);
-  }
-  console.log(works);
+  });
 }
 
+// Fonction pour créer les éléments HTML de la galerie
+function createElementGallery() {
+  works.forEach(element => {
+    const figureElement = document.createElement('figure');
+    const imgElement = document.createElement('img');
+    const figcaptionElement = document.createElement('figcaption');
 
-// créer les boutons class catégories et leur donner leur style : 
-categories.unshift({ id: 0, name: "Tous" });
+    imgElement.setAttribute('src', element.imageUrl);
+    imgElement.setAttribute('alt', element.title);
+    figcaptionElement.textContent = element.title;
+
+    figureElement.appendChild(imgElement);
+    figureElement.appendChild(figcaptionElement);
+    galleryDiv.appendChild(figureElement);
+  });
+}
+
+// Fonction pour créer les boutons de catégories
 function createCategoryButtons() {
-  const categoriesDiv = document.querySelector('.categories');
-
   if (categories) {
+    categories.unshift({ id: 0, name: "Tous" });
+
     categories.forEach(category => {
       const buttonCategories = document.createElement('button');
       buttonCategories.textContent = category.name;
       categoriesDiv.appendChild(buttonCategories);
 
       buttonCategories.addEventListener('click', () => {
-        filterGalleryByCategory(category.name);
+        if (category.name === "Tous") {
+          createElementGallery();
+        } else {
+          filterGalleryByCategory(category.name);
+        }
       });
     });
   }
 }
-
-createCategoryButtons()
-
-
-
-
-// ajouter event listeners sur l'evenement click sur les boutons : 
 
 
 

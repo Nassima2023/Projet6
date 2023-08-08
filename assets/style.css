@@ -210,3 +210,14 @@ footer nav ul {
 	color : white;
 	background-color: #1D6154;
   }
+
+ 
+.login:visited, .login:link {
+	color: black;
+}
+
+.mdp {
+	font-weight: 500;
+	text-decoration: underline;
+	margin-bottom: 300px;
+}
