@@ -1,7 +1,9 @@
 // variables et constantes 
 
 let works = null;
-let categories = null 
+let categories = [];
+let buttonCategories = document.createElement('button');
+
 
 // Fonctions 
 window.onload = async (event) =>
@@ -13,6 +15,9 @@ window.onload = async (event) =>
   // Appel à l'API pour récupérer les catégories 
   categories = await getDataFromBackend("categories")
   console.log(categories);
+
+  // Appel à la fonction createCategoryButtons pour afficher les boutons sur la page 
+  createCategoryButtons()
 
 };
   
@@ -53,9 +58,28 @@ async function createElementGallery()
 }
 
 
-
-
 // créer les boutons class catégories et leur donner leur style : 
+categories.unshift({ id: 0, name: "Tous" });
+function createCategoryButtons() {
+  const categoriesDiv = document.querySelector('.categories');
+
+  if (categories) {
+    categories.forEach(category => {
+      const buttonCategories = document.createElement('button');
+      buttonCategories.textContent = category.name;
+      categoriesDiv.appendChild(buttonCategories);
+
+      buttonCategories.addEventListener('click', () => {
+        filterGalleryByCategory(category.name);
+      });
+    });
+  }
+}
+
+createCategoryButtons()
+
+
+
 
 // ajouter event listeners sur l'evenement click sur les boutons : 
 
