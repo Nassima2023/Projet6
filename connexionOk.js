@@ -5,8 +5,15 @@ let categories = null;
 const categoriesDiv = document.querySelector('.categories');
 const galleryDiv = document.querySelector('.gallery');
 
+// Récupérer la fenêtre modale et le bouton de fermeture
+const modal = document.getElementById('myModal');
+const btn = document.querySelector('.icon-modification');
+const span = document.querySelector('.close');
+
+
 // Fonction pour récupérer les données du backend
-async function getDataFromBackend(dataToGet) {
+async function getDataFromBackend(dataToGet) 
+{
   try {
     const response = await fetch('http://localhost:5678/api/' + dataToGet);
     const data = await response.json();
@@ -17,22 +24,22 @@ async function getDataFromBackend(dataToGet) {
 }
 
 // Chargement initial de la page
-window.onload = async () => {
+window.onload = async () => 
+{
   // Récupération des données du backend
   works = await getDataFromBackend("works");
   categories = await getDataFromBackend("categories");
-
-  // Création des boutons de catégories
-  createCategoryButtons();
-
+  console.log(works);
+  console.log(categories);
+ 
   // Affichage initial de la galerie
   createElementGallery();
 };
 
 
 // Fonction pour filtrer les images par catégorie
-function filterGalleryByCategory(categoryName) {
-
+function filterGalleryByCategory(categoryName) 
+{
   // Vide la galerie actuelle
   galleryDiv.innerHTML = '';
 
@@ -56,7 +63,8 @@ function filterGalleryByCategory(categoryName) {
 }
 
 // Fonction pour créer les éléments HTML de la galerie
-function createElementGallery() {
+function createElementGallery() 
+{
   works.forEach(element => {
     const figureElement = document.createElement('figure');
     const imgElement = document.createElement('img');
@@ -72,26 +80,24 @@ function createElementGallery() {
   });
 }
 
-// Fonction pour créer les boutons de catégories
-function createCategoryButtons() {
-  if (categories) {
-    categories.unshift({ id: 0, name: "Tous" });
 
-    categories.forEach(category => {
-      const buttonCategories = document.createElement('button');
-      buttonCategories.textContent = category.name;
-      categoriesDiv.appendChild(buttonCategories);
+// Ouvrir la fenêtre modale lorsque l'utilisateur clique sur l'icône
+btn.addEventListener('click', function() 
+{
+  modal.style.display = 'block';
+});
 
-      buttonCategories.addEventListener('click', () => {
-        if (category.name === "Tous") {
-          createElementGallery();
-        } else {
-          filterGalleryByCategory(category.name);
-        }
-      });
-    });
+// Fermer la fenêtre modale lorsque l'utilisateur clique sur le bouton de fermeture
+span.addEventListener('click', function() 
+{
+  modal.style.display = 'none';
+});
+
+// Fermer la fenêtre modale si l'utilisateur clique en dehors du contenu de la fenêtre
+window.addEventListener('click', function(event) 
+{
+  if (event.target === modal) {
+    modal.style.display = 'none';
   }
-}
-
-
+});
 
