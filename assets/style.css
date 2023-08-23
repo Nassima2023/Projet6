@@ -295,7 +295,8 @@ footer nav ul
 	height: 50px;
 	gap: 20px;
 	box-sizing: border-box;
-	visibility: hidden;}
+	visibility: hidden;
+}
 
 
 
@@ -308,7 +309,8 @@ footer nav ul
 } 
 /* Fenêtre modale  */
 
-.modal {
+.modal 
+{
 	display: none; 
 	position: fixed;
 	z-index: 1;
@@ -319,43 +321,76 @@ footer nav ul
 	background-color: rgba(0, 0, 0, 0.4); 
 	overflow: auto;
 	max-height: 100vh;
+	overflow: scroll;
+
   }
   
-  .modal-content {
+  .modal-content 
+  {
+	position: relative;
 	background-color: white;
 	margin: 15% auto;
 	padding: 20px;
 	border: 1px solid #888;
 	border-radius: 13px;
 	width: 50%;
+	overflow-y: scroll;
   }
   
   
-  .close {
+  .close 
+  {
 	color: #aaa;
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
   }
   
-  .border {
+  .border 
+  {
+	position: absolute;
 	color: #B3B3B3;
-    width: 425px;
+    width: 600px;
     height: 0px;
     border: 1px solid #B3B3B3;
     position: absolute;
-    left: 335px;
+    left: 120px;
     MARGIN-TOP: 40px;
   }
 
-  /* Style pour l'icône de la poubelle */
-.fa-trash {
+.fa-trash-can 
+{
 	position: absolute;
-	top: 5px; /* Ajustez cette valeur pour régler la position verticale */
-	right: 5px; /* Ajustez cette valeur pour régler la position horizontale */
-	font-size: 16px; /* Ajustez cette valeur pour la taille de l'icône */
-	cursor: pointer; /* Change le curseur au survol pour indiquer qu'il est cliquable */
-	color: red; /* Couleur de l'icône, changez-la selon vos préférences */
-	z-index: 1; /* Assure que l'icône est au-dessus du contenu de l'élément */
+	top: 5px; 
+	right: 5px;  
+	font-size: 16px; 
+	cursor: pointer; 
+	color: white; 
+	z-index: 1; 
+	background-color: black;
+	border-radius: 4px;
+	padding: 5px;
+  }
+
+  .fa-arrows-up-down-left-right 
+  {
+	position: absolute;
+	top: 10px;
+	left: 135px;
+	font-size: 16px; 
+	cursor: pointer; 
+	color: white; 
+	z-index: 1; 
+	background-color: black;
+	border-radius: 4px;
+	padding: 5px;
+  }
+
+  .suppression-sentence
+  {
+	display: flex;
+	justify-content: center;
+	color: #e74c3c;
+	margin-bottom: 20px;
   }
   

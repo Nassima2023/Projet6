@@ -122,24 +122,43 @@ async function loadPage() {
           titleDiv.style.justifyContent = 'center';
           titleDiv.style.margin ="40px 0px 40px 0px"
 
-           // Ajouter les œuvres et créez les éléments dans la galerie modale
-          works.forEach(element => {
-          const figureElement = document.createElement('figure');
-          const imgElement = document.createElement('img');
-          const figcaptionElement = document.createElement('figcaption');
-          
-          imgElement.setAttribute('src', element.imageUrl);
-          imgElement.setAttribute('alt', element.title);
-          figcaptionElement.textContent = 'éditer';
+          // Ajouter les œuvres et créez les éléments dans la galerie modale
+          works.forEach((element, index) => {
+            const figureElement = document.createElement('figure');
+            const imgElement = document.createElement('img');
+            const figcaptionElement = document.createElement('figcaption');
+            const trashIcon = document.createElement('i'); // Créez l'icône de poubelle
+            
+            imgElement.setAttribute('src', element.imageUrl);
+            imgElement.setAttribute('alt', element.title);
+            figcaptionElement.textContent = 'éditer';
 
-          figureElement.appendChild(imgElement);
-          figureElement.appendChild(figcaptionElement);
+            // Ajoutez la classe de l'icône de poubelle (utilisez la classe appropriée pour votre bibliothèque d'icônes)
+            trashIcon.classList.add('fa', 'fa-trash-can');
+            
+            // Placez l'icône de poubelle en haut à droite de la figureElement
+            figureElement.style.position = 'relative'; 
+            trashIcon.style.position = 'absolute';
+            trashIcon.style.top = '10px'; 
+            trashIcon.style.right = '10px'; 
+
+            figureElement.appendChild(imgElement);
+            figureElement.appendChild(figcaptionElement);
+            figureElement.appendChild(trashIcon);
+
+            if (index === 0) {
+              // Si c'est le premier élément, ajoutez l'icône flèche
+              const customIcon = document.createElement('i');
+              customIcon.classList.add('fa-solid', 'fa-arrows-up-down-left-right');
+              customIcon.style.position = 'absolute';
+
+            figureElement.appendChild(customIcon);
+          }
+
           modalGalleryDiv.appendChild(figureElement);
+          modalContent.insertBefore(titleDiv, modalGalleryDiv);
+});
 
-          modalContent.insertBefore (titleDiv, modalGalleryDiv)
-
-          
-        });
 
         // Créer la div pour le bouton "Ajouter une photo"
           const divBtnAddPicture = document.createElement('div');
@@ -163,9 +182,16 @@ async function loadPage() {
           btnAddPicture.style.border = 'none'; 
           btnAddPicture.style.borderRadius = '30px'; 
           btnAddPicture.style.color = 'white'; 
-          btnAddPicture.style.padding = '10px 30px';
+          btnAddPicture.style.padding = '10px 40px';
           btnAddPicture.style.whiteSpace = 'nowrap'
 
+          const suppressionSetence = document.createElement('div')
+          const sentence = document.createElement('p')
+          sentence.textContent = 'Supprimer la galerie'
+          suppressionSetence.className = 'suppression-sentence'
+
+          suppressionSetence.appendChild(sentence)
+          modalContent.appendChild(suppressionSetence)
 
         // Marquer la modale comme ouverte
         modalOpened = true;
