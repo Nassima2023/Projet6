@@ -349,7 +349,7 @@ footer nav ul
   }
 
   /* Style pour l'icône de la poubelle */
-.delete-icon-modal {
+.fa-trash {
 	position: absolute;
 	top: 5px; /* Ajustez cette valeur pour régler la position verticale */
 	right: 5px; /* Ajustez cette valeur pour régler la position horizontale */
