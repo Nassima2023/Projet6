@@ -7,7 +7,7 @@ const galleryDiv = document.querySelector('.gallery');
 
 // Récupérer la fenêtre modale et le bouton de fermeture
 const modal = document.getElementById('myModal');
-const btn = document.querySelector('.icon-modification');
+const btn = document.querySelectorAll('.icon-modification');
 const span = document.querySelector('.close');
 
 
@@ -40,8 +40,6 @@ window.onload = async () =>
 // Fonction pour filtrer les images par catégorie
 function filterGalleryByCategory(categoryName) 
 {
-  // Vide la galerie actuelle
-  galleryDiv.innerHTML = '';
 
   // Filtrer les images par catégorie
   const filteredWorks = works.filter(work => work.category.name === categoryName);
@@ -85,7 +83,31 @@ function createElementGallery()
 btn.addEventListener('click', function() 
 {
   modal.style.display = 'block';
+
+  // récuperer la div de la galerie dans la modale
+  const modalGalleryDiv = modal.querySelector('.gallery');
+
+  // Effacer le contenu actuel de la galerie modale
+  modalGalleryDiv.innerHTML = '';
+
+  // Ajouter les œuvres et créez les éléments dans la galerie modale
+  works.forEach(element =>
+  {
+    const figureElement = document.createElement('figure');
+    const imgElement = document.createElement('img');
+    const figcaptionElement = document.createElement('figcaption');
+
+    imgElement.setAttribute('src', element.imageUrl);
+    imgElement.setAttribute('alt', element.title);
+    figcaptionElement.textContent = 'éditer';
+
+    figureElement.appendChild(imgElement);
+    figureElement.appendChild(figcaptionElement);
+    modalGalleryDiv.appendChild(figureElement);
+    console.log(figureElement)
+  });
 });
+
 
 // Fermer la fenêtre modale lorsque l'utilisateur clique sur le bouton de fermeture
 span.addEventListener('click', function() 
