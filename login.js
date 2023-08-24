@@ -35,5 +35,3 @@ form.addEventListener("submit", async (event) => {
     console.log('Informations d\'identification incorrectes');
   }
 });
-
-// Maintenant, vous pouvez utiliser les variables data et token ailleurs dans votre code

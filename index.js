@@ -168,6 +168,8 @@ async function loadPage() {
               } catch (error) {
                 console.error('Erreur lors de la suppression de l\'œuvre:', error);
               }
+
+             
             });
 
           
@@ -213,6 +215,7 @@ async function loadPage() {
           btnAddPicture.style.color = 'white'; 
           btnAddPicture.style.padding = '10px 40px';
           btnAddPicture.style.whiteSpace = 'nowrap'
+
 
           const suppressionSetence = document.createElement('div')
           const sentence = document.createElement('p')
