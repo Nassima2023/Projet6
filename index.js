@@ -122,7 +122,7 @@ async function loadPage() {
           titleDiv.style.justifyContent = 'center';
           titleDiv.style.margin ="40px 0px 40px 0px"
 
-          // Ajouter les œuvres et créez les éléments dans la galerie modale
+          // Ajouter les œuvres et créer les éléments dans la galerie modale
           works.forEach((element, index) => {
             const figureElement = document.createElement('figure');
             const imgElement = document.createElement('img');
@@ -133,21 +133,50 @@ async function loadPage() {
             imgElement.setAttribute('alt', element.title);
             figcaptionElement.textContent = 'éditer';
 
-            // Ajoutez la classe de l'icône de poubelle (utilisez la classe appropriée pour votre bibliothèque d'icônes)
+            // j'ajoute la classe de l'icône de poubelle 
             trashIcon.classList.add('fa', 'fa-trash-can');
             
-            // Placez l'icône de poubelle en haut à droite de la figureElement
+            // Placement de l'icône de poubelle en haut à droite de la figureElement
             figureElement.style.position = 'relative'; 
             trashIcon.style.position = 'absolute';
             trashIcon.style.top = '10px'; 
             trashIcon.style.right = '10px'; 
 
+
+            // Écouter le clic sur l'icône de poubelle
+            trashIcon.addEventListener('click', async () => {
+              // ID de l'œuvre actuelle
+              const workId = element.id;
+              const token = localStorage.getItem('token')
+              
+              try {
+                
+                // on effectue la requête de suppression en utilisant le token
+                const deleteResponse = await fetch(`http://localhost:5678/api/works/${workId}`, {
+                  method: 'DELETE',
+                  headers: {
+                    'Authorization': `Bearer ${token}` // Utilisation du token
+                    },
+                  });
+                  
+                  if (deleteResponse.ok) {
+                  // Si la suppression réussit, on supprime l'élément de la galerie
+                  modalGalleryDiv.removeChild(figureElement);
+                } else {
+                  console.error('Erreur lors de la suppression de l\'œuvre.');
+                }
+              } catch (error) {
+                console.error('Erreur lors de la suppression de l\'œuvre:', error);
+              }
+            });
+
+          
             figureElement.appendChild(imgElement);
             figureElement.appendChild(figcaptionElement);
             figureElement.appendChild(trashIcon);
 
             if (index === 0) {
-              // Si c'est le premier élément, ajoutez l'icône flèche
+              // Si c'est le premier élément, on ajoute l'icône flèche
               const customIcon = document.createElement('i');
               customIcon.classList.add('fa-solid', 'fa-arrows-up-down-left-right');
               customIcon.style.position = 'absolute';
@@ -260,6 +289,3 @@ if (logoutLink) {
     window.location.href = 'index.html';
   });
 }
-
-
-

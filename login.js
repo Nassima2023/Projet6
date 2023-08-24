@@ -1,11 +1,15 @@
+// Déclarez les variables en dehors de la portée de la fonction
+let data = null;
+let token = null;
+
 const form = document.querySelector('form');
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-
+  
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-
+  
   const response = await fetch('http://localhost:5678/api/users/login', {
     method: 'POST',
     headers: {
@@ -13,12 +17,12 @@ form.addEventListener("submit", async (event) => {
     },
     body: JSON.stringify({ email, password })
   });
-
+  
   if (response.ok) {
     // Connexion réussie
-    const data = await response.json();
-    const token = data.token;
-
+    data = await response.json();
+    token = data.token;
+    
     localStorage.setItem('token', token);
     localStorage.setItem('loggedIn', 'true');
 
@@ -31,3 +35,5 @@ form.addEventListener("submit", async (event) => {
     console.log('Informations d\'identification incorrectes');
   }
 });
+
+// Maintenant, vous pouvez utiliser les variables data et token ailleurs dans votre code

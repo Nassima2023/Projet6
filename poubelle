@@ -1,0 +1,122 @@
+ // Vérification de l'état de connexion
+  const loggedIn = localStorage.getItem('loggedIn');
+
+  // Si connecté, afficher les éléments appropriés
+  if (loggedIn === 'true') {
+    const modePage = document.querySelector('.mode-page');
+    const modificationIcons = document.querySelectorAll('.icon-modification'); 
+    const loginLink = document.querySelector('.login');
+    const logoutLink = document.querySelector('.logout');
+
+    // je parcours la liste des éléments et défini la propriété visibility sur chacun d'eux
+    modificationIcons.forEach(icon => {
+      icon.style.visibility = 'visible';
+
+      // Ouvrir la fenêtre modale lorsque l'utilisateur clique sur l'icône d'édition
+      icon.addEventListener('click', function() {
+        modal.style.display = 'block';
+
+        // Vérifier si la modale a déjà été ouverte
+        if (!modalOpened) {
+          // récuperer la div de la galerie dans la modale
+          const modalGalleryDiv = modal.querySelector('.gallery');
+
+          // Effacer le contenu actuel de la galerie modale
+          modalGalleryDiv.innerHTML = '';
+
+          // Ajouter un titre à la modale
+          const modalContent = modal.querySelector('.modal-content')
+
+          // Créer le titre "Galerie Photo"
+          const title = document.createElement('h2');
+          title.textContent = 'Galerie Photo';
+
+          // Créer la titleDiv et ajouter le titre à l'intérieur
+          const titleDiv = document.createElement('div');
+          titleDiv.className = 'titleDiv';
+          titleDiv.appendChild(title);
+
+          // Ajouter la titleDiv à la modalContent
+          modalContent.appendChild(titleDiv);
+
+          titleDiv.style.display = 'flex';
+          titleDiv.style.justifyContent = 'center';
+          titleDiv.style.margin ="40px 0px 40px 0px"
+
+          // Ajouter les œuvres et créez les éléments dans la galerie modale
+          works.forEach((element, index) => {
+            const figureElement = document.createElement('figure');
+            const imgElement = document.createElement('img');
+            const figcaptionElement = document.createElement('figcaption');
+            const trashIcon = document.createElement('i'); // Créez l'icône de poubelle
+            
+            imgElement.setAttribute('src', element.imageUrl);
+            imgElement.setAttribute('alt', element.title);
+            figcaptionElement.textContent = 'éditer';
+
+            // Ajoutez la classe de l'icône de poubelle (utilisez la classe appropriée pour votre bibliothèque d'icônes)
+            trashIcon.classList.add('fa', 'fa-trash-can');
+            
+            // Placez l'icône de poubelle en haut à droite de la figureElement
+            figureElement.style.position = 'relative'; 
+            trashIcon.style.position = 'absolute';
+            trashIcon.style.top = '10px'; 
+            trashIcon.style.right = '10px'; 
+
+            figureElement.appendChild(imgElement);
+            figureElement.appendChild(figcaptionElement);
+            figureElement.appendChild(trashIcon);
+
+            if (index === 0) {
+              // Si c'est le premier élément, ajoutez l'icône flèche
+              const customIcon = document.createElement('i');
+              customIcon.classList.add('fa-solid', 'fa-arrows-up-down-left-right');
+              customIcon.style.position = 'absolute';
+
+            figureElement.appendChild(customIcon);
+          }
+
+          modalGalleryDiv.appendChild(figureElement);
+          modalContent.insertBefore(titleDiv, modalGalleryDiv);
+});
+
+
+        // Créer la div pour le bouton "Ajouter une photo"
+          const divBtnAddPicture = document.createElement('div');
+
+          // Créer le bouton "Ajouter une photo"
+          const btnAddPicture = document.createElement('button');
+          btnAddPicture.textContent = 'Ajouter une photo';
+
+          // Ajouter le bouton à la div divBtnAddPicture
+          divBtnAddPicture.appendChild(btnAddPicture);
+
+          // Ajouter la div divBtnAddPicture à la modalContent
+          modalContent.appendChild(divBtnAddPicture);
+
+          divBtnAddPicture.style.display ='flex';
+          divBtnAddPicture.style.justifyContent = 'center';
+          divBtnAddPicture.style.marginTop = '70px';
+          divBtnAddPicture.style.marginBottom = '40px'
+          
+          btnAddPicture.style.backgroundColor = '#1D6154'; 
+          btnAddPicture.style.border = 'none'; 
+          btnAddPicture.style.borderRadius = '30px'; 
+          btnAddPicture.style.color = 'white'; 
+          btnAddPicture.style.padding = '10px 40px';
+          btnAddPicture.style.whiteSpace = 'nowrap'
+
+          const suppressionSetence = document.createElement('div')
+          const sentence = document.createElement('p')
+          sentence.textContent = 'Supprimer la galerie'
+          suppressionSetence.className = 'suppression-sentence'
+
+          suppressionSetence.appendChild(sentence)
+          modalContent.appendChild(suppressionSetence)
+
+        // Marquer la modale comme ouverte
+        modalOpened = true;
+      }
+      });
+      
+      
