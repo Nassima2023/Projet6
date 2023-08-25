@@ -292,4 +292,3 @@ if (logoutLink) {
     window.location.href = 'index.html';
   });
 }
-      

@@ -61,6 +61,8 @@ function createElementGallery(targetDiv) {
     const imgElement = document.createElement('img');
     const figcaptionElement = document.createElement('figcaption');
 
+    figureElement.id = `galleryElement_${element.id}`;
+
     imgElement.setAttribute('src', element.imageUrl);
     imgElement.setAttribute('alt', element.title);
     figcaptionElement.textContent = element.title;
@@ -149,26 +151,31 @@ async function loadPage() {
               const workId = element.id;
               const token = localStorage.getItem('token')
               
+
               try {
-                
                 // on effectue la requête de suppression en utilisant le token
                 const deleteResponse = await fetch(`http://localhost:5678/api/works/${workId}`, {
                   method: 'DELETE',
                   headers: {
                     'Authorization': `Bearer ${token}` // Utilisation du token
-                    },
-                  });
-                  
-                  if (deleteResponse.ok) {
-                  // Si la suppression réussit, on supprime l'élément de la galerie
+                  },
+                });
+                
+                if (deleteResponse.ok) {
+                  // Si la suppression réussit, on supprime l'élément de la galerie dans la modale
                   modalGalleryDiv.removeChild(figureElement);
+                  
+                  // on supprime également l'élément correspondant dans la galerie principale (page)
+                  const galleryElement = document.getElementById(`galleryElement_${workId}`);
+                  if (galleryElement) {
+                    galleryElement.parentElement.removeChild(galleryElement);
+                  }
                 } else {
                   console.error('Erreur lors de la suppression de l\'œuvre.');
                 }
               } catch (error) {
                 console.error('Erreur lors de la suppression de l\'œuvre:', error);
               }
-
              
             });
 
