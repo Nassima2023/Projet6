@@ -485,15 +485,25 @@ footer nav ul
 	gap: 20px;
   }
 
-.labelModal, .categoryModal {
+.labelModal {
 	width: 60%;
-    font-size: 18px; 
+}
+
+.categoryModal
+{
+	width: 63%;
+}
+
+.style-category-label 
+{
+	font-size: 18px; 
     padding: 10px; 
     border: 0px solid #ccc; 
     border-radius: 3px; 
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
     margin-bottom: 10px; 
 	margin: auto;
+
 }
 
 .label , .category 

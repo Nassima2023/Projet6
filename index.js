@@ -290,6 +290,25 @@ async function loadPage() {
       })
     });
 
+        // Affichage des catégories récupérées depuis l'API dans AddPictureModale
+        const categorySelect = document.getElementById('category');
+
+        //  je crée une option vide par défaut, pour que rie ne s'affiche 
+        const defaultOption = document.createElement('option');
+        defaultOption.textContent = ''; // Laissez le texte vide
+
+      // Ajouter l'option vide en haut de la liste déroulante
+      categorySelect.appendChild(defaultOption);
+
+      // Parcourir les catégories récupérées depuis l'API
+      categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.name; 
+        option.textContent = category.name; // Le texte de l'option
+        categorySelect.appendChild(option); // Ajouter l'option à la liste déroulante
+      });
+
+
  
     if (modePage) modePage.style.visibility = 'visible';
     if (loginLink) loginLink.style.display = 'none';
