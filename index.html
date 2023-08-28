@@ -104,7 +104,7 @@
 		<div class="add-photo-container">
 
 			<i class="fa-regular fa-image"></i>
-
+			<img id="selectedImage" src="" alt="Image sélectionnée">
 			<label for="photoInput" class="add-photo-label">
 				<i class="fas fa-plus"></i> Ajouter photo
 			</label>
@@ -116,14 +116,14 @@
 	
 		</div>
 		
-		<div class="addInformationOfPicture">
+		<form class="addInformationOfPicture">
 			<label for="title" class="label">Titre</label>
 			<input type="text" class="labelModal style-category-label" id="title" name="title">
 
 			<label for="title" class="category">Catégorie</label>
 			<select name="category" id="category" class="categoryModal style-category-label"></select>
 			<!-- balise select : associer la liste des catégories de l'API-->
-		</div>
+		</form>
 
 		<hr class="border  hr-center">
 

@@ -308,6 +308,8 @@ async function loadPage() {
         categorySelect.appendChild(option); // Ajouter l'option à la liste déroulante
       });
 
+      // Poster une nouvelle image : 
+          
 
  
     if (modePage) modePage.style.visibility = 'visible';
