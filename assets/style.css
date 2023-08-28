@@ -429,6 +429,7 @@ footer nav ul
   {
 	display: flex;
 	justify-content: center;
+	margin-top: 30px;
   }
 
 
@@ -504,6 +505,12 @@ footer nav ul
 	position: absolute;
 	top: 15px;
 	left: 15px;
+	font-size: 24px;
+}
+
+.fa-arrow-left:hover 
+{
+	color: black;
 }
 
 

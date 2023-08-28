@@ -8,6 +8,8 @@ const galleryDiv = document.querySelector('.gallery');
 const modal = document.getElementById('myModal');
 const btn = document.querySelectorAll('.icon-modification');
 const span = document.querySelector('.close');
+const addPictureModal = document.getElementById('addPictureModal');
+const closeAddPictureModal = document.querySelector('#addPictureModal .close');
 
 // Variable pour suivre si la modale a déjà été ouverte
 let modalOpened = false;
@@ -204,6 +206,7 @@ async function loadPage() {
           // Créer le bouton "Ajouter une photo"
           const btnAddPicture = document.createElement('button');
           btnAddPicture.textContent = 'Ajouter une photo';
+          btnAddPicture.id = 'btnAddPicture'; // Ajoutez un ID
 
           // Ajouter le bouton à la div divBtnAddPicture
           divBtnAddPicture.appendChild(btnAddPicture);
@@ -224,6 +227,16 @@ async function loadPage() {
           btnAddPicture.style.whiteSpace = 'nowrap'
 
 
+          // Ajoutez un gestionnaire d'événements de délégation pour écouter les clics sur le bouton
+          modalContent.addEventListener('click', function (event) {
+            if (event.target.id === 'btnAddPicture') {
+            
+              modal.style.display = 'none';
+
+              addPictureModal.style.display = 'block';
+            }
+});
+        
           const suppressionSetence = document.createElement('div')
           const sentence = document.createElement('p')
           sentence.textContent = 'Supprimer la galerie'
@@ -234,9 +247,24 @@ async function loadPage() {
 
         // Marquer la modale comme ouverte
         modalOpened = true;
+        
       }
       });
       
+      // passage de la seconde modale à la première en cliquant sur la flèche
+        const goBackToMyModal = document.getElementById('goBackToMyModal');
+
+        // Ajoutez un gestionnaire d'événements de clic
+        goBackToMyModal.addEventListener('click', function (event) {
+          event.preventDefault(); // Empêche le comportement de lien par défaut
+
+          // masquer la modal "AddPictureModale"
+          addPictureModal.style.display = 'none';
+
+          // Pour afficher la modal "myModal"
+          modal.style.display = 'block';
+});
+
       
       // Fermer la fenêtre modale lorsque l'utilisateur clique sur le bouton de fermeture
       span.addEventListener('click', function() {
@@ -249,8 +277,20 @@ async function loadPage() {
           modal.style.display = 'none';
         }
       });
+
+      // fermer la modale AddPictureModal
+        closeAddPictureModal.addEventListener('click', function() {
+        addPictureModal.style.display = 'none'; 
+      });
+
+      window.addEventListener('click', function(event) {
+        if (event.target === addPictureModal) {
+          addPictureModal.style.display = 'none';
+        }
+      })
     });
 
+ 
     if (modePage) modePage.style.visibility = 'visible';
     if (loginLink) loginLink.style.display = 'none';
     if (logoutLink) logoutLink.style.display = 'block';
@@ -262,6 +302,9 @@ async function loadPage() {
     createCategoryButtons();
     createElementGallery(galleryDiv);
   }
+
+
+
 }
 
 // Fonction pour créer les boutons de catégories
