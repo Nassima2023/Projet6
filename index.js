@@ -131,7 +131,7 @@ async function loadPage() {
             const figureElement = document.createElement('figure');
             const imgElement = document.createElement('img');
             const figcaptionElement = document.createElement('figcaption');
-            const trashIcon = document.createElement('i'); // Créez l'icône de poubelle
+            const trashIcon = document.createElement('i'); 
             
             imgElement.setAttribute('src', element.imageUrl);
             imgElement.setAttribute('alt', element.title);
@@ -151,10 +151,10 @@ async function loadPage() {
             trashIcon.addEventListener('click', async () => {
               // ID de l'œuvre actuelle
               const workId = element.id;
-              const token = localStorage.getItem('token')
               
-
+              
               try {
+                const token = localStorage.getItem('token')
                 // on effectue la requête de suppression en utilisant le token
                 const deleteResponse = await fetch(`http://localhost:5678/api/works/${workId}`, {
                   method: 'DELETE',
@@ -308,8 +308,6 @@ async function loadPage() {
         categorySelect.appendChild(option); // Ajouter l'option à la liste déroulante
       });
 
-      // Poster une nouvelle image : 
-          
 
  
     if (modePage) modePage.style.visibility = 'visible';

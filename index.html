@@ -15,7 +15,7 @@
 <body>
 
 	<div class="mode-page">
-		<img src="assets/icons/Group 3.svg" alt="icone mode édition">
+		<img src="assets/icons/Group3.svg" alt="icone mode édition">
 		<button class="btnPublication"> Publier les changements </button>
 	</div>
 	
@@ -38,7 +38,7 @@
 			<img src="./assets/images/sophie-bluel.png" alt="">
 
 			<div class="modification">
-				<img src="assets/icons/Group 5.svg" alt="icône modification" class="icon-modification">
+				<img src="assets/icons/Group5.svg" alt="icône modification" class="icon-modification">
 			</div>
 	
 		</figure>
@@ -52,7 +52,7 @@
 	<section id="portfolio">
 		<div class="title-modification">
 			<h2>Mes Projets</h2>
-			<img src="assets/icons/Group 5.svg" alt="icône modification" class="icon-modification">
+			<img src="assets/icons/Group5.svg" alt="icône modification" class="icon-modification">
 		</div>
 		
 		<div class="categories"> </div>
@@ -93,46 +93,43 @@
 </div>
 
 <div id="addPictureModal" class="modalAddPicture">
-	
 	<div class="modalAddPicture-content">
 
-		<span class="close">&times;</span>
-		<i class="fa-solid fa-arrow-left" id="goBackToMyModal"></i>
+	  <span class="close">&times;</span>
+	  <i class="fa-solid fa-arrow-left" id="goBackToMyModal"></i>
+	  <h2 class="titleAddPicture"> Ajout photo </h2>
 
-		<h2 class="titleAddPicture"> Ajout photo </h2>
+	<form class="add-photo-container" id="imageForm" enctype="multipart/form-data">
 
-		<div class="add-photo-container">
-
-			<i class="fa-regular fa-image"></i>
-			<img id="selectedImage" src="" alt="Image sélectionnée">
-			<label for="photoInput" class="add-photo-label">
-				<i class="fas fa-plus"></i> Ajouter photo
-			</label>
-			<input type="file" id="photoInput" accept="image/*">
+		<i class="fa-regular fa-image"></i>
+		<label for="photoInput" class="add-photo-label">
+			<i class="fas fa-plus"></i> Ajouter photo
+			<input type="file" name="image" id="photoInput" accept="image/*">
+		</label>
 
 			<div class="textAddPhoto">
 				<p> jpg, png : 4mo max </p>
 			</div>
-	
-		</div>
-		
-		<form class="addInformationOfPicture">
-			<label for="title" class="label">Titre</label>
+			
+		<div id="imageForm" class="addInformationOfPicture">
+			<label for="title" name= title class="label">Titre</label>
 			<input type="text" class="labelModal style-category-label" id="title" name="title">
-
-			<label for="title" class="category">Catégorie</label>
+			<label for="category" name="category" class="category">Catégorie</label>
 			<select name="category" id="category" class="categoryModal style-category-label"></select>
-			<!-- balise select : associer la liste des catégories de l'API-->
-		</form>
-
-		<hr class="border  hr-center">
+		</div>
 
 		<div class="divBtnValidate">
-			<button class="btnValidate"> Valider </button>
+		  <button type="submit" class="btnValidate"> Valider </button>
 		</div>
 
-</div>
+	</form>
 
+
+		<hr class="border  hr-center">
+		
+	</div>
+  </div>
+  
 <script src="index.js"> </script>
 <script src="login.js"> </script>
 
