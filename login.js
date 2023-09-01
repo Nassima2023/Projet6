@@ -1,6 +1,7 @@
 // Déclarez les variables en dehors de la portée de la fonction
 let data = null;
 let token = null;
+localStorage.removeItem('token');
 
 const form = document.querySelector('form');
 
@@ -25,7 +26,8 @@ form.addEventListener("submit", async (event) => {
     
     localStorage.setItem('token', token);
     localStorage.setItem('loggedIn', 'true');
-
+    alert('connecté');
+  
     // Redirection vers la page d'accueil
     window.location.href = 'index.html';
   } else {

@@ -245,9 +245,122 @@ async function loadPage() {
           suppressionSetence.appendChild(sentence)
           modalContent.appendChild(suppressionSetence)
 
+
+          document.getElementById("imageForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Empêche la soumission normale du formulaire
+        
+            // Accédez au fichier image téléchargé
+            const imageFile = document.getElementById("photoInput").files[0];
+        
+            // Vérifiez si un fichier a été sélectionné
+            if (!imageFile) {
+                alert("Veuillez sélectionner une image.");
+                console.log("Aucune image sélectionnée."); // Ajoutez cette ligne pour afficher un message dans la console
+                return; // Arrêtez la soumission du formulaire
+            }
+        
+            // Vérifiez la taille du fichier (4 Mo maximum)
+            const maxSize = 4 * 1024 * 1024; // 4 Mo en octets
+            if (imageFile.size > maxSize) {
+                alert("La taille du fichier est supérieure à 4 Mo. Veuillez choisir un fichier plus petit.");
+                console.log("Fichier trop volumineux."); // Ajoutez cette ligne pour afficher un message dans la console
+                return; // Arrêtez la soumission du formulaire
+            }
+        
+            // Si le fichier est valide, vous pouvez maintenant soumettre le formulaire
+            this.submit();
+        });
+
+          // Affichage des catégories récupérées depuis l'API dans AddPictureModale
+          const categorySelect = document.getElementById('category');
+
+          // //  je crée une option vide par défaut, pour que rie ne s'affiche 
+          // const defaultOption = document.createElement('option');
+          // defaultOption.textContent = ''; // Laissez le texte vide
+  
+        // Ajouter l'option vide en haut de la liste déroulante
+        // categorySelect.appendChild(defaultOption);
+  
+        // Parcourir les catégories récupérées depuis l'API
+        categories.forEach(category => {
+          const option = document.createElement('option');
+          option.value = category.name; 
+          option.textContent = category.name; // Le texte de l'option
+          categorySelect.appendChild(option); // Ajouter l'option à la liste déroulante
+        });
+  
+
+
+        const btnValidate = document.querySelector(".btnValidate");
+        btnValidate.addEventListener("click", async function (event) {
+            event.preventDefault(); 
+            console.log("ajout d'image")
+        
+            // Récupérer le token d'authentification depuis le localStorage
+            const authToken = localStorage.getItem("token");
+            console.log("token : " + authToken);
+        
+            // Récupérer le titre et la catégorie depuis les champs du formulaire
+            const image = document.getElementById("photoInput").files[0]; 
+            const title = document.getElementById("title").value;
+            const categoryName = document.getElementById("category").value; // Modifier la récupération de la catégorie
+            console.log("title : " + title);
+            console.log("categoryName : " + categoryName);
+    
+            if (categoryName) 
+            { 
+              // // Créer un objet contenant les données à envoyer au format JSON
+              // const data = {
+              //   title: title,
+              //   category: categoryName
+              // };
+        
+              // Créer un objet FormData pour gérer le téléchargement de l'image
+              const formData = new FormData();
+              formData.append("image", image); 
+              formData.append("title", title); // Ajouter les données JSON
+              formData.append("category", categoryName); // Ajouter les données JSON
+
+
+              // Ajouter le token d'authentification dans les en-têtes de la requête
+              const headers = new Headers({
+                  "Authorization": `Bearer ${authToken}`
+              });
+
+              console.log("data : " + data);
+              // Envoi de la requête à l'API
+              try {
+                  const response = await fetch("http://localhost:5678/api/works/", {
+                      method: "POST",
+                      headers: {
+                        "Authorization": 'Bearer ' + authToken
+                      },
+                      body: formData // Utiliser le FormData comme corps de la requête
+                  });
+                  console.log("response.status : " + response.status);
+                  // Vérification de la réponse de l'API
+                  if (response.status === 201) {
+                      // La requête a réussi
+                      const responseData = await response.json();
+                      console.log("Image ajoutée avec succès :", responseData);
+                  } else {
+                      // La requête a échoué
+                      console.error("Échec de l'ajout de l'image.");
+                  }
+              } catch (error) {
+                  console.error("Erreur lors de la requête à l'API :", error);
+              }
+            }
+        });
+                        
+        
+                      
+
+
         // Marquer la modale comme ouverte
         modalOpened = true;
         
+
       }
       });
       
@@ -290,24 +403,7 @@ async function loadPage() {
       })
     });
 
-        // Affichage des catégories récupérées depuis l'API dans AddPictureModale
-        const categorySelect = document.getElementById('category');
-
-        //  je crée une option vide par défaut, pour que rie ne s'affiche 
-        const defaultOption = document.createElement('option');
-        defaultOption.textContent = ''; // Laissez le texte vide
-
-      // Ajouter l'option vide en haut de la liste déroulante
-      categorySelect.appendChild(defaultOption);
-
-      // Parcourir les catégories récupérées depuis l'API
-      categories.forEach(category => {
-        const option = document.createElement('option');
-        option.value = category.name; 
-        option.textContent = category.name; // Le texte de l'option
-        categorySelect.appendChild(option); // Ajouter l'option à la liste déroulante
-      });
-
+      
 
  
     if (modePage) modePage.style.visibility = 'visible';
