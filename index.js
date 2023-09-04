@@ -153,7 +153,7 @@ async function loadPage() {
               const workId = element.id;
               const token = localStorage.getItem('token')
               
-
+              
               try {
                 // on effectue la requête de suppression en utilisant le token
                 const deleteResponse = await fetch(`http://localhost:5678/api/works/${workId}`, {
@@ -245,6 +245,9 @@ async function loadPage() {
           suppressionSetence.appendChild(sentence)
           modalContent.appendChild(suppressionSetence)
 
+
+
+          
         // Marquer la modale comme ouverte
         modalOpened = true;
         
