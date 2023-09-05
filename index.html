@@ -96,21 +96,28 @@
 	<div class="modalAddPicture-content">
 
 	  <span class="close">&times;</span>
+
+
 	  <i class="fa-solid fa-arrow-left" id="goBackToMyModal"></i>
 	  <h2 class="titleAddPicture"> Ajout photo </h2>
 
 	<form class="add-photo-container" id= "imageForm">
 
-		<i class="fa-regular fa-image"></i>
-		<label for="photoInput" class="add-photo-label">
-			<i class="fas fa-plus"></i> Ajouter photo
-			<input type="file" name="image" id="photoInput" accept="image/*">
-		</label>
+		<div class="background-blue">
+			<i class="fa-regular fa-image"></i>
+			<label for="photoInput" class="add-photo-label">
+				<i class="fas fa-plus"></i> Ajouter photo
+				<input type="file" name="image" id="photoInput" accept="image/*">
+			</label>
+		
 
 			<div class="textAddPhoto">
 				<p> jpg, png : 4mo max </p>
 			</div>
-			
+
+		</div>
+
+
 		<div  class="addInformationOfPicture">
 			<label for="title" name= title class="label">Titre</label>
 			<input type="text" class="labelModal style-category-label" id="title" name="title">
@@ -118,14 +125,14 @@
 			<select name="category" id="category" class="categoryModal style-category-label"></select>
 		</div>
 
+		<hr class="border  hr-center">
+
+
 		<div class="divBtnValidate">
 		  <button type="submit" class="btnValidate"> Valider </button>
 		</div>
 
 	</form>
-
-
-		<hr class="border  hr-center">
 		
 	</div>
   </div>

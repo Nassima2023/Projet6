@@ -82,7 +82,7 @@ async function loadPage() {
   categories = await getDataFromBackend("categories");
 
   // Vérification de l'état de connexion
-  const loggedIn = localStorage.getItem('loggedIn');
+  const loggedIn = sessionStorage.getItem('loggedIn');
 
   // Si connecté, afficher les éléments appropriés
   if (loggedIn === 'true') {
@@ -154,7 +154,7 @@ async function loadPage() {
               
               
               try {
-                const token = localStorage.getItem('token')
+                const token = sessionStorage.getItem('token')
                 // on effectue la requête de suppression en utilisant le token
                 const deleteResponse = await fetch(`http://localhost:5678/api/works/${workId}`, {
                   method: 'DELETE',
@@ -216,7 +216,7 @@ async function loadPage() {
 
           divBtnAddPicture.style.display ='flex';
           divBtnAddPicture.style.justifyContent = 'center';
-          divBtnAddPicture.style.marginTop = '70px';
+          divBtnAddPicture.style.marginTop = '40px';
           divBtnAddPicture.style.marginBottom = '40px'
           
           btnAddPicture.style.backgroundColor = '#1D6154'; 
@@ -274,17 +274,17 @@ async function loadPage() {
           // Affichage des catégories récupérées depuis l'API dans AddPictureModale
           const categorySelect = document.getElementById('category');
 
-          // //  je crée une option vide par défaut, pour que rie ne s'affiche 
-          // const defaultOption = document.createElement('option');
-          // defaultOption.textContent = ''; // Laissez le texte vide
+          //  je crée une option vide par défaut, pour que rie ne s'affiche 
+          const defaultOption = document.createElement('option');
+          defaultOption.textContent = ''; // Laissez le texte vide
   
         // Ajouter l'option vide en haut de la liste déroulante
-        // categorySelect.appendChild(defaultOption);
+        categorySelect.appendChild(defaultOption);
   
         // Parcourir les catégories récupérées depuis l'API
         categories.forEach(category => {
           const option = document.createElement('option');
-          option.value = category.name; 
+          option.value = category.id; 
           option.textContent = category.name; // Le texte de l'option
           categorySelect.appendChild(option); // Ajouter l'option à la liste déroulante
         });
@@ -296,30 +296,32 @@ async function loadPage() {
             event.preventDefault(); 
             console.log("ajout d'image")
         
-            // Récupérer le token d'authentification depuis le localStorage
-            const authToken = localStorage.getItem("token");
+            // Récupérer le token d'authentification depuis le sessionStorage
+            const authToken = sessionStorage.getItem("token");
             console.log("token : " + authToken);
         
             // Récupérer le titre et la catégorie depuis les champs du formulaire
             const image = document.getElementById("photoInput").files[0]; 
             const title = document.getElementById("title").value;
-            const categoryName = document.getElementById("category").value; // Modifier la récupération de la catégorie
+            const categoryId = document.getElementById("category").value; // Modifier la récupération de la catégorie
             console.log("title : " + title);
-            console.log("categoryName : " + categoryName);
-    
-            if (categoryName) 
+            console.log("categoryId : " + categoryId);
+
+             // Vérifier si les champs obligatoires sont renseignés
+            if (!image || !title || !categoryId) {
+              // Afficher un message d'erreur
+              alert("Veuillez renseigner tous les champs du formulaire.");
+              return; // Arrêter l'exécution de la fonction
+              }
+            
+            if (categoryId) 
             { 
-              // // Créer un objet contenant les données à envoyer au format JSON
-              // const data = {
-              //   title: title,
-              //   category: categoryName
-              // };
-        
+              
               // Créer un objet FormData pour gérer le téléchargement de l'image
               const formData = new FormData();
               formData.append("image", image); 
               formData.append("title", title); // Ajouter les données JSON
-              formData.append("category", categoryName); // Ajouter les données JSON
+              formData.append("category", categoryId); // Ajouter les données JSON
 
 
               // Ajouter le token d'authentification dans les en-têtes de la requête
@@ -332,9 +334,7 @@ async function loadPage() {
               try {
                   const response = await fetch("http://localhost:5678/api/works/", {
                       method: "POST",
-                      headers: {
-                        "Authorization": 'Bearer ' + authToken
-                      },
+                      headers: headers,
                       body: formData // Utiliser le FormData comme corps de la requête
                   });
                   console.log("response.status : " + response.status);
@@ -452,8 +452,8 @@ function createCategoryButtons() {
 const logoutLink = document.querySelector('.logout');
 if (logoutLink) {
   logoutLink.addEventListener('click', () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('loggedIn');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('loggedIn');
     window.location.href = 'index.html';
   });
 }

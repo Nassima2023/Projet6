@@ -1,7 +1,6 @@
 // Déclarez les variables en dehors de la portée de la fonction
 let data = null;
 let token = null;
-localStorage.removeItem('token');
 
 const form = document.querySelector('form');
 
@@ -24,8 +23,8 @@ form.addEventListener("submit", async (event) => {
     data = await response.json();
     token = data.token;
     
-    localStorage.setItem('token', token);
-    localStorage.setItem('loggedIn', 'true');
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('loggedIn', 'true');
     alert('connecté');
   
     // Redirection vers la page d'accueil

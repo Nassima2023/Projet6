@@ -386,14 +386,14 @@ footer nav ul
 
   .border-modal
   {
-	position: absolute;
 	color: #B3B3B3;
     width: 70%;
     height: 0px;
     border: 1px solid #B3B3B3;
-    position: absolute;
-    left: 15%;
-    MARGIN-TOP: 200px;
+    /* position: absolute; */
+    /* left: 15%; */
+    MARGIN-TOP: 60px;
+    MARGIN-BOTTOM: 20px
   }
   
   
@@ -434,13 +434,20 @@ footer nav ul
 
 
 .add-photo-container {
-    background-color: #E8F1F6; 
     padding: 20px;
-    text-align: center;
 	width: 	56%;
 	margin: auto;
 	margin-top: 40px;
 	margin-bottom: 40px;
+}
+
+.background-blue {
+	background-color: #E8F1F6; 
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 }
 
 .add-photo-label {
@@ -483,15 +490,16 @@ footer nav ul
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	margin-top: 20px;
   }
 
 .labelModal {
-	width: 60%;
+	width: 95%;
 }
 
 .categoryModal
 {
-	width: 63%;
+	width: 100%;
 }
 
 .style-category-label 
@@ -506,10 +514,7 @@ footer nav ul
 
 }
 
-.label , .category 
-{
-	margin-left: 150px;
-}
+
 
 .fa-arrow-left {
 	position: absolute;
@@ -543,12 +548,13 @@ footer nav ul
 
 .border 
 {
-  position: absolute;
-  color: #B3B3B3;
-  width: 70%;
-  height: 0px;
-  border: 1px solid #B3B3B3;
-  position: absolute;
-  left: 15%; 
-  MARGIN-TOP: 40px;
+	position: absolute;
+    color: #B3B3B3;
+    width: 56%;
+    height: 0px;
+    border: 0.5px solid #B3B3B3;
+    position: absolute;
+    left: 22%;
+    MARGIN-TOP: 50PX;
+    MARGIN-BOTTOM: 60px;
 }
