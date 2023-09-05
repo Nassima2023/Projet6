@@ -10,6 +10,8 @@ const btn = document.querySelectorAll('.icon-modification');
 const span = document.querySelector('.close');
 const addPictureModal = document.getElementById('addPictureModal');
 const closeAddPictureModal = document.querySelector('#addPictureModal .close');
+const imagePreview = document.getElementById("imagePreview");
+
 
 // Variable pour suivre si la modale a déjà été ouverte
 let modalOpened = false;
@@ -353,13 +355,37 @@ async function loadPage() {
             }
         });
                         
+
+        const photoInput = document.getElementById("photoInput");
+        const imagePreview = document.getElementById("imagePreview");
         
-                      
-
-
+        photoInput.addEventListener("change", function() {
+            const selectedImage = photoInput.files[0];
+        
+            if (selectedImage) {
+                const reader = new FileReader();
+        
+                reader.onload = function(e) {
+                    // Mettre à jour la source de l'image avec les données de l'image sélectionnée
+                    imagePreview.src = e.target.result;
+                    // Supprimer la classe qui masque le texte "Image Preview"
+                    imagePreview.classList.remove("hide-label");
+                };
+        
+                // Lire le fichier image en tant qu'URL de données
+                reader.readAsDataURL(selectedImage);
+            } else {
+                // Si aucun fichier n'est sélectionné, effacez la source de l'image
+                imagePreview.src = "#";
+                // Ajoutez à nouveau la classe pour masquer le texte
+                imagePreview.classList.add("hide-label");
+            }
+        });
+        
+        
+    
         // Marquer la modale comme ouverte
         modalOpened = true;
-        
 
       }
       });
@@ -391,9 +417,14 @@ async function loadPage() {
         }
       });
 
+
       // fermer la modale AddPictureModal
         closeAddPictureModal.addEventListener('click', function() {
         addPictureModal.style.display = 'none'; 
+        imagePreview.src = '#';
+        imagePreview.classList.add("hide-label");
+
+        
       });
 
       window.addEventListener('click', function(event) {
