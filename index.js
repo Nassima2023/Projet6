@@ -359,7 +359,25 @@ async function loadPage() {
 
                       // Appeler la fonction pour mettre à jour la galerie existante
                       createElementGallery(galleryDiv, works);
-                
+
+                      // Ajouter la nouvelle images dans la modale "MyModal"
+                      const modalGalleryDiv = modal.querySelector('.gallery');
+                      const newFigureElement = document.createElement('figure');
+                      const newImgElement = document.createElement('img');
+                      const newFigcaptionElement = document.createElement('figcaption');
+
+                      newImgElement.setAttribute('src', responseData.imageUrl);
+                      newImgElement.setAttribute('alt', responseData.title);
+                      newFigcaptionElement.textContent = "éditer";
+
+                      newFigureElement.appendChild(newImgElement);
+                      newFigureElement.appendChild(newFigcaptionElement);
+
+                      // Ajouter l'élément à la galerie modale
+                      modalGalleryDiv.appendChild(newFigureElement);
+
+                    // Fermer la modale "Ajouter une photo"
+                      addPictureModal.style.display = 'none';
                       
                   } else {
                       // La requête a échoué

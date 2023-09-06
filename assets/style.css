@@ -578,6 +578,10 @@ footer nav ul
 	font-family: "syne";
 }
 
+.btn-ok {
+	background-color: #1D6154;
+}
+
 .border 
 {
 	position: absolute;
