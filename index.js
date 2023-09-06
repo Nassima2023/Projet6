@@ -11,6 +11,8 @@ const span = document.querySelector('.close');
 const addPictureModal = document.getElementById('addPictureModal');
 const closeAddPictureModal = document.querySelector('#addPictureModal .close');
 const imagePreview = document.getElementById("imagePreview");
+const photoInput = document.getElementById("photoInput");
+
 
 
 // Variable pour suivre si la modale a déjà été ouverte
@@ -93,6 +95,7 @@ async function loadPage() {
     const loginLink = document.querySelector('.login');
     const logoutLink = document.querySelector('.logout');
 
+    
     // je parcours la liste des éléments et défini la propriété visibility sur chacun d'eux
     modificationIcons.forEach(icon => {
       icon.style.visibility = 'visible';
@@ -100,14 +103,17 @@ async function loadPage() {
       // Ouvrir la fenêtre modale lorsque l'utilisateur clique sur l'icône d'édition
       icon.addEventListener('click', function() {
         modal.style.display = 'block';
+        
+        
 
         // Vérifier si la modale a déjà été ouverte
         if (!modalOpened) {
           // récuperer la div de la galerie dans la modale
           const modalGalleryDiv = modal.querySelector('.gallery');
-
+          
           // Effacer le contenu actuel de la galerie modale
           modalGalleryDiv.innerHTML = '';
+          
 
           // Ajouter un titre à la modale
           const modalContent = modal.querySelector('.modal-content')
@@ -229,7 +235,7 @@ async function loadPage() {
           btnAddPicture.style.whiteSpace = 'nowrap'
 
 
-          // Ajoutez un gestionnaire d'événements de délégation pour écouter les clics sur le bouton
+          // Ajouter un event listener pour écouter les clics sur le bouton
           modalContent.addEventListener('click', function (event) {
             if (event.target.id === 'btnAddPicture') {
             
@@ -251,32 +257,32 @@ async function loadPage() {
           document.getElementById("imageForm").addEventListener("submit", function (event) {
             event.preventDefault(); // Empêche la soumission normale du formulaire
         
-            // Accédez au fichier image téléchargé
+            // Accéder au fichier image téléchargé
             const imageFile = document.getElementById("photoInput").files[0];
         
-            // Vérifiez si un fichier a été sélectionné
+            // Vérifier si un fichier a été sélectionné
             if (!imageFile) {
                 alert("Veuillez sélectionner une image.");
-                console.log("Aucune image sélectionnée."); // Ajoutez cette ligne pour afficher un message dans la console
-                return; // Arrêtez la soumission du formulaire
+                console.log("Aucune image sélectionnée."); 
+                return; // Arrêter la soumission du formulaire
             }
         
-            // Vérifiez la taille du fichier (4 Mo maximum)
-            const maxSize = 4 * 1024 * 1024; // 4 Mo en octets
+            // Vérifier la taille du fichier (4 Mo maximum)
+            const maxSize = 4 * 1024 * 1024; 
             if (imageFile.size > maxSize) {
                 alert("La taille du fichier est supérieure à 4 Mo. Veuillez choisir un fichier plus petit.");
-                console.log("Fichier trop volumineux."); // Ajoutez cette ligne pour afficher un message dans la console
-                return; // Arrêtez la soumission du formulaire
+                console.log("Fichier trop volumineux."); 
+                return; 
             }
         
-            // Si le fichier est valide, vous pouvez maintenant soumettre le formulaire
+            // Si le fichier est valide, on peut maintenant soumettre le formulaire
             this.submit();
         });
 
           // Affichage des catégories récupérées depuis l'API dans AddPictureModale
           const categorySelect = document.getElementById('category');
 
-          //  je crée une option vide par défaut, pour que rie ne s'affiche 
+          //  je crée une option vide par défaut, pour que rien ne s'affiche 
           const defaultOption = document.createElement('option');
           defaultOption.textContent = ''; // Laissez le texte vide
   
@@ -294,6 +300,8 @@ async function loadPage() {
 
 
         const btnValidate = document.querySelector(".btnValidate");
+
+
         btnValidate.addEventListener("click", async function (event) {
             event.preventDefault(); 
             console.log("ajout d'image")
@@ -345,6 +353,14 @@ async function loadPage() {
                       // La requête a réussi
                       const responseData = await response.json();
                       console.log("Image ajoutée avec succès :", responseData);
+
+                      // Mettre à jour la galerie d'œuvres avec la nouvelle image
+                      works.push(responseData);
+
+                      // Appeler la fonction pour mettre à jour la galerie existante
+                      createElementGallery(galleryDiv, works);
+                
+                      
                   } else {
                       // La requête a échoué
                       console.error("Échec de l'ajout de l'image.");
@@ -354,11 +370,7 @@ async function loadPage() {
               }
             }
         });
-                        
-
-        const photoInput = document.getElementById("photoInput");
-        const imagePreview = document.getElementById("imagePreview");
-        
+                                
         photoInput.addEventListener("change", function() {
             const selectedImage = photoInput.files[0];
         
@@ -393,7 +405,7 @@ async function loadPage() {
       // passage de la seconde modale à la première en cliquant sur la flèche
         const goBackToMyModal = document.getElementById('goBackToMyModal');
 
-        // Ajoutez un gestionnaire d'événements de clic
+        // Ajouter un gestionnaire d'événements de clic
         goBackToMyModal.addEventListener('click', function (event) {
           event.preventDefault(); // Empêche le comportement de lien par défaut
 
@@ -421,6 +433,11 @@ async function loadPage() {
       // fermer la modale AddPictureModal
         closeAddPictureModal.addEventListener('click', function() {
         addPictureModal.style.display = 'none'; 
+
+        document.getElementById("title").value = "";
+        document.getElementById("category").value = "";
+        document.getElementById("photoInput").value = "";
+
         imagePreview.src = '#';
         imagePreview.classList.add("hide-label");
 
