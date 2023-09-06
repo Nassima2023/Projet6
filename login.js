@@ -25,7 +25,6 @@ form.addEventListener("submit", async (event) => {
     
     sessionStorage.setItem('token', token);
     sessionStorage.setItem('loggedIn', 'true');
-    alert('connecté');
   
     // Redirection vers la page d'accueil
     window.location.href = 'index.html';

@@ -351,8 +351,7 @@ footer nav ul
 .fa-trash-can 
 {
 	position: absolute;
-	top: 5px; 
-	right: 5px;  
+	top: 5px;  
 	font-size: 16px; 
 	cursor: pointer; 
 	color: white; 
@@ -366,7 +365,7 @@ footer nav ul
   {
 	position: absolute;
 	top: 10px;
-	left: 125px;
+	right: 22%;
 	font-size: 16px; 
 	cursor: pointer; 
 	color: white; 
@@ -456,8 +455,7 @@ footer nav ul
 
 .image-preview {
     position: absolute;
-    top: 0; 
-    left: 130px; 
+    top: 0;  
     max-height: 250px; 
     text-align: center; 
     z-index: 1; 
@@ -478,13 +476,6 @@ footer nav ul
 }
 
 
-
-.add-photo-label {
-    display: block;
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
 #photoInput {
     display: none; 
 }
@@ -495,17 +486,18 @@ footer nav ul
 }
 
 .add-photo-label {
-    display: flex;
-	margin-top: 30px;
-	align-items: center;
-	justify-content: center;
-    font-size: 18px;
+	display: flex;
+    margin-top: 30px;
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
     margin-bottom: 10px;
-	border-radius: 50px;
-	padding: 10px 15px;
-	width: 33%;
-	background-color: rgba(142, 162, 198, 0.5);
-	z-index: 0;
+    border-radius: 50px;
+    padding: 10px 15px;
+    width: 30%;
+    background-color: rgba(142, 162, 198, 0.5);
+    z-index: 0;
 }
 
 .fa-image
