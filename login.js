@@ -1,4 +1,4 @@
-// Déclarez les variables en dehors de la portée de la fonction
+// Déclarer  les variables en dehors de la portée de la fonction
 let data = null;
 let token = null;
 

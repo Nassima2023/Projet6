@@ -13,6 +13,8 @@ const closeAddPictureModal = document.querySelector('#addPictureModal .close');
 const imagePreview = document.getElementById("imagePreview");
 const photoInput = document.getElementById("photoInput");
 
+
+
 // Variable pour suivre si la modale a déjà été ouverte
 let modalOpened = false;
 
@@ -49,15 +51,19 @@ function filterGalleryByCategory(categoryName)
     const figureElement = document.createElement('figure');
     const imgElement = document.createElement('img');
     const figcaptionElement = document.createElement('figcaption');
+
     imgElement.setAttribute('src', element.imageUrl);
     imgElement.setAttribute('alt', element.title);
     figcaptionElement.textContent = element.title;
+
     figureElement.appendChild(imgElement);
     figureElement.appendChild(figcaptionElement);
     galleryDiv.appendChild(figureElement);
   });
 }
+
 // Fonction pour créer les éléments HTML de la galerie
+// Appeler cette focntion dans les fonctions de suppression et d'ajout et 
 function createElementGallery(targetDiv) 
 {
   targetDiv.innerHTML = ''; // Vide la galerie actuelle
@@ -65,10 +71,13 @@ function createElementGallery(targetDiv)
     const figureElement = document.createElement('figure');
     const imgElement = document.createElement('img');
     const figcaptionElement = document.createElement('figcaption');
+
     figureElement.id = `galleryElement_${element.id}`;
     imgElement.setAttribute('src', element.imageUrl);
     imgElement.setAttribute('alt', element.title);
+
     figcaptionElement.textContent = element.title;
+
     figureElement.appendChild(imgElement);
     figureElement.appendChild(figcaptionElement);
     targetDiv.appendChild(figureElement);
@@ -78,9 +87,12 @@ function createElementGallery(targetDiv)
 // Fonction pour charger la page
 async function loadPage() 
 {
+  // alert("loadPage")
   // Récupération des données du backend
   works = await getDataFromBackend("works");
   categories = await getDataFromBackend("categories");
+
+
   // Vérification de l'état de connexion
   const loggedIn = sessionStorage.getItem('loggedIn');
   // Si connecté, afficher les éléments appropriés
@@ -111,6 +123,7 @@ async function loadPage()
           
           // Ajouter un titre à la modale
           const modalContent = modal.querySelector('.modal-content')
+
           // Créer le titre "Galerie Photo"
           const title = document.createElement('h2');
           title.textContent = 'Galerie Photo';
@@ -143,6 +156,7 @@ async function loadPage()
             trashIcon.style.position = 'absolute';
             trashIcon.style.top = '10px'; 
             trashIcon.style.right = '5%'; 
+
             // Écouter le clic sur l'icône de poubelle
             trashIcon.addEventListener('click', async () => 
             {
@@ -165,19 +179,23 @@ async function loadPage()
                 if (deleteResponse.ok) 
                 {
                   // Si la suppression réussit, on supprime l'élément de la galerie dans la modale
+                  // Retirer également l'élément dans works
+                  const indexToRemove = works.findIndex(work => work.id === workId);
+                  if (indexToRemove !== -1) {
+                    works.splice(indexToRemove, 1); // Supprimer l'élément du tableau
+                  }
                   modalGalleryDiv.removeChild(figureElement);
-
-                   // On Met à jour la liste des œuvres en la filtrant pour exclure l'image supprimée
-                  works = works.filter(work => work.id !== workId);
-
+                  createElementGallery(galleryDiv);
+                  
                   // Vérifiez s'il existe également une image correspondante dans la galerie principale (page)
                   const galleryElement = document.getElementById(`galleryElement_${workId}`);
                   if (galleryElement) 
                   {
                     // Supprimez l'élément correspondant de la galerie principale (page)
                     galleryElement.parentElement.removeChild(galleryElement);
+                    
                   }
-                  
+                 
                 } 
                 else 
                 {
@@ -344,9 +362,11 @@ async function loadPage()
                       console.log("Image ajoutée avec succès :", responseData);
                       // Mettre à jour la galerie d'œuvres avec la nouvelle image
                       works.push(responseData);
+                      console.log(works);
+                      console.log(responseData);
 
                       // Appeler la fonction pour mettre à jour la galerie existante
-                      createElementGallery(galleryDiv, works);
+                      createElementGallery(galleryDiv);
 
 
                       // Ajouter la nouvelle images dans la modale "MyModal"
@@ -412,8 +432,13 @@ async function loadPage()
                     console.error('Erreur lors de la suppression de l\'œuvre:', error);
                   }
               });
-                    // // Fermer la modale "Ajouter une photo"
-                    //   addPictureModal.style.display = 'none';
+                    // Fermer la modale "Ajouter une photo" et supprimer tous les éléments à l'intérieur
+                      addPictureModal.style.display = 'none';
+                      document.getElementById("title").value = "";
+                      document.getElementById("category").value = "";
+                      document.getElementById("photoInput").value = "";
+                      imagePreview.src = '#';
+                      imagePreview.classList.add("hide-label");
 
                   } 
                   else 
