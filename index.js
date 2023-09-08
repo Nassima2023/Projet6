@@ -416,6 +416,12 @@ async function loadPage()
                     {
                       // Si la suppression réussit, on supprime l'élément de la galerie dans la modale
                       modalGalleryDiv.removeChild(newFigureElement);
+
+                      // Retirer également l'élément dans works
+                      const indexToRemove = works.findIndex(work => work.id === workId);
+                      if (indexToRemove !== -1) {
+                        works.splice(indexToRemove, 1); // Supprimer l'élément du tableau
+                      }
                       
                       // on supprime également l'élément correspondant dans la galerie principale (page)
                       const galleryElement = document.getElementById(`galleryElement_${workId}`);
