@@ -63,7 +63,7 @@ function filterGalleryByCategory(categoryName)
 }
 
 // Fonction pour créer les éléments HTML de la galerie
-// Appeler cette focntion dans les fonctions de suppression et d'ajout et 
+// Appeler cette focntion dans les fonctions de suppression et d'ajout 
 function createElementGallery(targetDiv) 
 {
   targetDiv.innerHTML = ''; // Vide la galerie actuelle
@@ -127,15 +127,18 @@ async function loadPage()
           // Créer le titre "Galerie Photo"
           const title = document.createElement('h2');
           title.textContent = 'Galerie Photo';
+
           // Créer la titleDiv et ajouter le titre à l'intérieur
           const titleDiv = document.createElement('div');
           titleDiv.className = 'titleDiv';
           titleDiv.appendChild(title);
+
           // Ajouter la titleDiv à la modalContent
           modalContent.appendChild(titleDiv);
           titleDiv.style.display = 'flex';
           titleDiv.style.justifyContent = 'center';
           titleDiv.style.margin ="40px 0px 40px 0px"
+
           // Ajouter les œuvres et créer les éléments dans la galerie modale
           works.forEach((element, index) => 
           {
@@ -148,6 +151,7 @@ async function loadPage()
             imgElement.setAttribute('src', element.imageUrl);
             imgElement.setAttribute('alt', element.title);
             figcaptionElement.textContent = 'éditer';
+
             // j'ajoute la classe de l'icône de poubelle 
             trashIcon.classList.add('fa', 'fa-trash-can');
             
@@ -163,9 +167,9 @@ async function loadPage()
               // ID de l'œuvre actuelle
               const workId = element.id;
               
-              
               try {
                 const token = sessionStorage.getItem('token')
+
                 // on effectue la requête de suppression en utilisant le token
                 const deleteResponse = await fetch(`http://localhost:5678/api/works/${workId}`, 
                 {
@@ -178,33 +182,33 @@ async function loadPage()
                 
                 if (deleteResponse.ok) 
                 {
-                  // Si la suppression réussit, on supprime l'élément de la galerie dans la modale
-                  // Retirer également l'élément dans works
+                  // Retirer l'élément dans works
                   const indexToRemove = works.findIndex(work => work.id === workId);
                   if (indexToRemove !== -1) {
                     works.splice(indexToRemove, 1); // Supprimer l'élément du tableau
                   }
+                  // Si la suppression réussit, on supprime l'élément de la galerie dans la modale
                   modalGalleryDiv.removeChild(figureElement);
                   createElementGallery(galleryDiv);
                   
-                  // Vérifiez s'il existe également une image correspondante dans la galerie principale (page)
+                  // Vérifier s'il existe également une image correspondante dans la galerie principale (page)
                   const galleryElement = document.getElementById(`galleryElement_${workId}`);
                   if (galleryElement) 
                   {
-                    // Supprimez l'élément correspondant de la galerie principale (page)
+                    // Supprimer l'élément correspondant de la galerie principale (page)
                     galleryElement.parentElement.removeChild(galleryElement);
                     
                   }
                  
                 } 
-                else 
+                  else 
+                  {
+                    console.error('Erreur lors de la suppression de l\'œuvre.');
+                  }
+                } catch (error) 
                 {
-                  console.error('Erreur lors de la suppression de l\'œuvre.');
+                  console.error('Erreur lors de la suppression de l\'œuvre:', error);
                 }
-              } catch (error) 
-              {
-                console.error('Erreur lors de la suppression de l\'œuvre:', error);
-              }
              
             });
           
@@ -223,14 +227,18 @@ async function loadPage()
           modalGalleryDiv.appendChild(figureElement);
           modalContent.insertBefore(titleDiv, modalGalleryDiv);
           });
+
         // Créer la div pour le bouton "Ajouter une photo"
           const divBtnAddPicture = document.createElement('div');
+
           // Créer le bouton "Ajouter une photo"
           const btnAddPicture = document.createElement('button');
           btnAddPicture.textContent = 'Ajouter une photo';
-          btnAddPicture.id = 'btnAddPicture'; // Ajoutez un ID
+          btnAddPicture.id = 'btnAddPicture'; 
+
           // Ajouter le bouton à la div divBtnAddPicture
           divBtnAddPicture.appendChild(btnAddPicture);
+          
           // Ajouter la div divBtnAddPicture à la modalContent
           modalContent.appendChild(divBtnAddPicture);
           divBtnAddPicture.style.display ='flex';
@@ -261,6 +269,7 @@ async function loadPage()
           suppressionSetence.className = 'suppression-sentence'
           suppressionSetence.appendChild(sentence)
           modalContent.appendChild(suppressionSetence)
+          
           document.getElementById("imageForm").addEventListener("submit", function (event) 
         {
             event.preventDefault(); // Empêche la soumission normale du formulaire
@@ -290,9 +299,10 @@ async function loadPage()
 
           // Affichage des catégories récupérées depuis l'API dans AddPictureModale
           const categorySelect = document.getElementById('category');
+
           //  je crée une option vide par défaut, pour que rien ne s'affiche 
           const defaultOption = document.createElement('option');
-          defaultOption.textContent = ''; // Laissez le texte vide
+          defaultOption.textContent = ''; 
   
         // Ajouter l'option vide en haut de la liste déroulante
         categorySelect.appendChild(defaultOption);
@@ -302,7 +312,7 @@ async function loadPage()
         {
           const option = document.createElement('option');
           option.value = category.id; 
-          option.textContent = category.name; // Le texte de l'option
+          option.textContent = category.name; 
           categorySelect.appendChild(option); // Ajouter l'option à la liste déroulante
         });
   
@@ -355,11 +365,13 @@ async function loadPage()
                   });
 
                   console.log("response.status : " + response.status);
+
                   // Vérification de la réponse de l'API
                   if (response.status === 201) {
                       // La requête a réussi
                       const responseData = await response.json();
                       console.log("Image ajoutée avec succès :", responseData);
+
                       // Mettre à jour la galerie d'œuvres avec la nouvelle image
                       works.push(responseData);
                       console.log(works);
@@ -420,7 +432,7 @@ async function loadPage()
                       // Retirer également l'élément dans works
                       const indexToRemove = works.findIndex(work => work.id === workId);
                       if (indexToRemove !== -1) {
-                        works.splice(indexToRemove, 1); // Supprimer l'élément du tableau
+                        works.splice(indexToRemove, 1); 
                       }
                       
                       // on supprime également l'élément correspondant dans la galerie principale (page)
@@ -494,9 +506,10 @@ async function loadPage()
       
       // passage de la seconde modale à la première en cliquant sur la flèche
         const goBackToMyModal = document.getElementById('goBackToMyModal');
-        // Ajouter un gestionnaire d'événements de clic
 
-        goBackToMyModal.addEventListener('click', function (event) {
+        // Ajouter un gestionnaire d'événements de clic
+        goBackToMyModal.addEventListener('click', function (event) 
+        {
           event.preventDefault(); // Empêche le comportement de lien par défaut
 
           // masquer la modal "AddPictureModale"
@@ -504,7 +517,7 @@ async function loadPage()
 
           // Pour afficher la modal "myModal"
           modal.style.display = 'block';
-});
+        });
       
       // Fermer la fenêtre modale lorsque l'utilisateur clique sur le bouton de fermeture
       span.addEventListener('click', function() 
