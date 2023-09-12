@@ -9,16 +9,15 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-
 </head>
+
+<div class="mode-page">
+	<img src="assets/icons/Group 3.svg" alt="icone mode édition">
+	<button class="btnPublication"> Publier les changements </button>
+</div>
+
 <body>
 
-	<div class="mode-page">
-		<img src="assets/icons/Group3.svg" alt="icone mode édition">
-		<button class="btnPublication"> Publier les changements </button>
-	</div>
-	
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
@@ -26,11 +25,9 @@
 			<li>projets</li>
 			<li>contact</li>
 			<li> <a href="login.html" class="login">login</a></li>
-			<li> <a href="#" class="logout"> logout</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
-	
 </header>
 <main>
 	<section id="introduction">
@@ -38,28 +35,27 @@
 			<img src="./assets/images/sophie-bluel.png" alt="">
 
 			<div class="modification">
-				<img src="assets/icons/Group5.svg" alt="icône modification" class="icon-modification">
+			<img src="assets/icons/Group 5.svg" alt="icône modification" class="icon-modification">
 			</div>
-	
-		</figure>
+
+		</figure>		
 		<article>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
+	
 	</section>
+
 	<section id="portfolio">
 		<div class="title-modification">
 			<h2>Mes Projets</h2>
-			<img src="assets/icons/Group5.svg" alt="icône modification" class="icon-modification">
+			<img src="assets/icons/Group 5.svg" alt="icône modification" class="icon-modification">
 		</div>
-		
-		<div class="categories"> </div>
+		<!-- <div class="categories"> </div> -->
 
-		<div class="gallery">
-
-		</div>
+		<div class="gallery"></div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
@@ -88,65 +84,9 @@
 	<div class="modal-content">
 	  <span class="close">&times;</span>
 	  <div class="gallery"></div>
-	  <hr class="border-modal">
 	</div>
 </div>
 
-<div id="addPictureModal" class="modalAddPicture">
-	<div class="modalAddPicture-content">
-
-	  <span class="close">&times;</span>
-
-
-	  <i class="fa-solid fa-arrow-left" id="goBackToMyModal"></i>
-	  <h2 class="titleAddPicture"> Ajout photo </h2>
-
-	<form class="add-photo-container" id= "imageForm">
-
-		
-
-		<div class="background-blue">
-
-			<div class="image-preview">
-				<img id="imagePreview" src="#" alt="Image Preview" class="hide-label">
-			</div>
-
-			<i class="fa-regular fa-image"></i>
-			<label for="photoInput" class="add-photo-label">
-				<i class="fas fa-plus"></i> Ajouter photo
-				<input type="file" name="image" id="photoInput" accept="image/*">
-			</label>
-		
-
-			<div class="textAddPhoto">
-				<p> jpg, png : 4mo max </p>
-			</div>
-
-			
-		</div>
-
-
-		<div  class="addInformationOfPicture">
-			<label for="title" name= title class="label">Titre</label>
-			<input type="text" class="labelModal style-category-label" id="title" name="title">
-			<label for="category" name="category" class="category">Catégorie</label>
-			<select name="category" id="category" class="categoryModal style-category-label"></select>
-		</div>
-
-		<hr class="border  hr-center">
-
-
-		<div class="divBtnValidate">
-		  <button type="submit" class="btnValidate "> Valider </button>
-		</div>
-
-	</form>
-		
-	</div>
-  </div>
-  
-<script src="index.js"> </script>
-<script src="login.js"> </script>
-
+<script src="connexionOk.js"> </script>
 </body>
 </html>
